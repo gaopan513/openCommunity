@@ -1,0 +1,154 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  },
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": { "navigationBarTitleText": "邻里社区" }
+    },
+    {
+      "path": "pages/posts/list",
+      "style": { "navigationBarTitleText": "邻里圈", "enablePullDownRefresh": true }
+    },
+    {
+      "path": "pages/products/list",
+      "style": { "navigationBarTitleText": "二手市场", "enablePullDownRefresh": true }
+    },
+    {
+      "path": "pages/services/index",
+      "style": { "navigationBarTitleText": "服务圈" }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": { "navigationBarTitleText": "我的", "enablePullDownRefresh": true }
+    },
+    {
+      "path": "pages/auth/login",
+      "style": { "navigationBarTitleText": "登录" }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "modules/posts",
+      "pages": [
+        {
+          "path": "detail",
+          "style": { "navigationBarTitleText": "帖子详情" }
+        },
+        {
+          "path": "create",
+          "style": { "navigationBarTitleText": "发布帖子" }
+        }
+      ]
+    },
+    {
+      "root": "modules/qa",
+      "pages": [
+        {
+          "path": "list",
+          "style": { "navigationBarTitleText": "经验问答", "enablePullDownRefresh": true }
+        },
+        {
+          "path": "detail",
+          "style": { "navigationBarTitleText": "问题详情" }
+        },
+        {
+          "path": "create",
+          "style": { "navigationBarTitleText": "提问" }
+        }
+      ]
+    },
+    {
+      "root": "modules/products",
+      "pages": [
+        {
+          "path": "detail",
+          "style": { "navigationBarTitleText": "商品详情" }
+        },
+        {
+          "path": "mine",
+          "style": { "navigationBarTitleText": "我的商品", "enablePullDownRefresh": true }
+        },
+        {
+          "path": "create-edit",
+          "style": { "navigationBarTitleText": "发布商品" }
+        }
+      ]
+    },
+    {
+      "root": "modules/housekeeping",
+      "pages": [
+        {
+          "path": "detail",
+          "style": { "navigationBarTitleText": "服务商详情" }
+        }
+      ]
+    },
+    {
+      "root": "modules/merchants",
+      "pages": [
+        {
+          "path": "detail",
+          "style": { "navigationBarTitleText": "商家详情" }
+        }
+      ]
+    },
+    {
+      "root": "modules/bookings",
+      "pages": [
+        {
+          "path": "my",
+          "style": { "navigationBarTitleText": "我的预约", "enablePullDownRefresh": true }
+        }
+      ]
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "邻里社区",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f6f7f9"
+  },
+  "tabBar": {
+    "color": "#86909c",
+    "selectedColor": "#e8622c",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "static/tab/home.png",
+        "selectedIconPath": "static/tab/home-active.png"
+      },
+      {
+        "pagePath": "pages/posts/list",
+        "text": "邻里圈",
+        "iconPath": "static/tab/posts.png",
+        "selectedIconPath": "static/tab/posts-active.png"
+      },
+      {
+        "pagePath": "pages/products/list",
+        "text": "二手市场",
+        "iconPath": "static/tab/market.png",
+        "selectedIconPath": "static/tab/market-active.png"
+      },
+      {
+        "pagePath": "pages/services/index",
+        "text": "服务圈",
+        "iconPath": "static/tab/service.png",
+        "selectedIconPath": "static/tab/service-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "static/tab/mine.png",
+        "selectedIconPath": "static/tab/mine-active.png"
+      }
+    ]
+  }
+}

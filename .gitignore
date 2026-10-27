@@ -1,0 +1,38 @@
+# 本地 AI 工具记录和代码索引
+.workbuddy/
+.codegraph/
+
+# Python 虚拟环境和字节码缓存
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# 本地数据库、数据库辅助文件和业务上传资料
+/backend/db.sqlite3
+/backend/db.sqlite3-*
+/backend/media/
+
+# 前端和小程序依赖、构建产物
+node_modules/
+dist/
+dist-ssr/
+
+# 微信开发者工具本机配置
+project.private.config.json
+
+# 环境变量默认保留在本地；允许公开示例和已核验的 API 地址配置
+.env
+.env.*
+!.env.example
+!.env.*.example
+!/miniprogram/.env.development
+!/miniprogram/.env.production
+
+# 运行日志
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

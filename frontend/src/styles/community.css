@@ -1,0 +1,713 @@
+/* ==========================================================================
+   openCommunity · 邻里通讯设计基调
+   温暖的邻里社区感：暖橙主色 + 深墨绿点缀，米白纸感背景
+   A neighborhood gazette aesthetic — editorial serif headlines on warm paper.
+   ========================================================================== */
+
+:root {
+  /* 品牌色板 */
+  --oc-primary: #e8622c;        /* 暖橙 - 主色 */
+  --oc-primary-deep: #c94f1e;   /* 深橙 - hover */
+  --oc-primary-soft: #fdeee5;   /* 浅橙 - 背景 */
+  --oc-ink: #2d3a33;            /* 墨绿黑 - 正文 */
+  --oc-ink-soft: #6b7a70;       /* 灰绿 - 次要文字 */
+  --oc-accent: #1f6f54;         /* 深墨绿 - 点缀 */
+  --oc-accent-soft: #e4f0ea;    /* 浅墨绿 */
+  --oc-gold: #e9a13b;           /* 金黄 - 精华/星级 */
+  --oc-paper: #faf7f2;          /* 米白 - 页面底色 */
+  --oc-card: #ffffff;           /* 卡片白 */
+  --oc-line: #ece5da;           /* 分割线 */
+  --oc-line-strong: #d9cfbe;    /* 强分割线 */
+
+  /* 字体 — 有性格的衬线展示字 + 中性正文 */
+  --oc-font-display: 'Fraunces', 'Noto Serif SC', 'Georgia', 'STSong', 'SimSun', serif;
+  --oc-font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* 阴影 */
+  --oc-shadow-sm: 0 1px 3px rgba(45, 58, 51, 0.06);
+  --oc-shadow-md: 0 4px 16px rgba(45, 58, 51, 0.08);
+  --oc-shadow-lift: 0 10px 30px rgba(232, 98, 44, 0.14);
+  --oc-shadow-paper: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 1px 3px rgba(45, 58, 51, 0.05);
+}
+
+body {
+  background-color: var(--oc-paper);
+  /* 细腻的纸感纹理背景：暖光晕 + 颗粒噪点 */
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(232, 98, 44, 0.05) 0%, transparent 42%),
+    radial-gradient(circle at 85% 80%, rgba(31, 111, 84, 0.05) 0%, transparent 42%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.23 0 0 0 0 0.2 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  color: var(--oc-ink);
+  font-family: var(--oc-font-body);
+}
+
+/* 全局链接融入暖色基调 */
+a {
+  color: var(--oc-primary-deep);
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: var(--oc-primary);
+}
+
+/* 通用页面容器 */
+.oc-page {
+  padding: 24px 0 60px;
+  animation: ocFadeUp 0.45s ease both;
+}
+
+@keyframes ocFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 页面标题区 */
+.oc-page-head {
+  margin-bottom: 24px;
+}
+
+.oc-page-head .oc-kicker {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--oc-primary);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.oc-page-head h1 {
+  font-family: var(--oc-font-display);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--oc-ink);
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.oc-page-head .oc-sub {
+  color: var(--oc-ink-soft);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* 通用卡片 */
+.oc-card {
+  background: var(--oc-card);
+  border: 1px solid var(--oc-line);
+  border-radius: 12px;
+  box-shadow: var(--oc-shadow-sm);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.oc-card--hover:hover {
+  box-shadow: var(--oc-shadow-md);
+  transform: translateY(-3px);
+  border-color: #e0d5c4;
+}
+
+/* 标签徽章 */
+.oc-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.oc-tag--top { background: var(--oc-primary-soft); color: var(--oc-primary-deep); }
+.oc-tag--featured { background: #fdf3dd; color: #b0761a; }
+.oc-tag--solved { background: var(--oc-accent-soft); color: var(--oc-accent); }
+.oc-tag--neutral { background: #f1ede6; color: var(--oc-ink-soft); }
+
+/* 统计数字 */
+.oc-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--oc-ink-soft);
+  font-size: 13px;
+}
+
+/* 空状态 */
+.oc-empty {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--oc-ink-soft);
+}
+
+/* 覆盖 Element Plus 主色，使其融入社区基调 */
+:root {
+  --el-color-primary: #e8622c;
+  --el-color-primary-light-3: #ef8a5f;
+  --el-color-primary-light-5: #f4ac8c;
+  --el-color-primary-light-7: #f9cebb;
+  --el-color-primary-light-8: #fbddce;
+  --el-color-primary-light-9: #fdeee5;
+  --el-color-primary-dark-2: #c94f1e;
+  --el-border-radius-base: 8px;
+  --el-font-family: var(--oc-font-body);
+}
+
+/* ==========================================================================
+   报头 Masthead — 社区通讯式的顶部导航
+   ========================================================================== */
+.oc-masthead {
+  background: var(--oc-card);
+  border-bottom: 1px solid var(--oc-line);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.oc-masthead::after {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, var(--oc-primary) 0%, var(--oc-gold) 35%, var(--oc-accent) 100%);
+}
+
+.oc-masthead-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  gap: 28px;
+}
+
+.oc-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.oc-brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--oc-primary) 0%, var(--oc-primary-deep) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--oc-font-display);
+  font-weight: 900;
+  font-size: 20px;
+  box-shadow: 0 3px 10px rgba(232, 98, 44, 0.3);
+  position: relative;
+}
+
+.oc-brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 7px;
+  pointer-events: none;
+}
+
+.oc-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.oc-brand-name {
+  font-family: var(--oc-font-display);
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--oc-ink);
+  letter-spacing: -0.01em;
+}
+
+.oc-brand-tag {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--oc-primary);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* 顶部导航菜单 */
+.oc-nav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 100%;
+}
+
+.oc-nav-item {
+  position: relative;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--oc-ink-soft);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+
+.oc-nav-item:hover {
+  color: var(--oc-primary-deep);
+  background: var(--oc-primary-soft);
+}
+
+.oc-nav-item.router-link-active {
+  color: var(--oc-primary-deep);
+}
+
+.oc-nav-item.router-link-active::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -1px;
+  height: 2px;
+  background: var(--oc-primary);
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   首页英雄区 — 编辑式封面感
+   ========================================================================== */
+.oc-hero {
+  position: relative;
+  background: var(--oc-card);
+  border: 1px solid var(--oc-line);
+  border-radius: 16px;
+  padding: 48px 44px 44px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  box-shadow: var(--oc-shadow-md);
+}
+
+.oc-hero::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(232, 98, 44, 0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.oc-hero::after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: -8%;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(31, 111, 84, 0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.oc-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.oc-hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--oc-primary);
+  margin-bottom: 14px;
+}
+
+.oc-hero-kicker::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: var(--oc-primary);
+}
+
+.oc-hero-title {
+  font-family: var(--oc-font-display);
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--oc-ink);
+  margin: 0 0 16px;
+}
+
+.oc-hero-title em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--oc-primary-deep);
+  position: relative;
+}
+
+.oc-hero-title em::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 8px;
+  background: rgba(232, 98, 44, 0.16);
+  z-index: -1;
+}
+
+.oc-hero-sub {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--oc-ink-soft);
+  margin: 0 0 24px;
+  max-width: 520px;
+}
+
+.oc-hero-stats {
+  display: flex;
+  gap: 36px;
+  padding-top: 22px;
+  border-top: 1px solid var(--oc-line);
+}
+
+.oc-hero-stat-num {
+  font-family: var(--oc-font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--oc-accent);
+  line-height: 1;
+}
+
+.oc-hero-stat-label {
+  font-size: 12px;
+  color: var(--oc-ink-soft);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   首页板块卡片网格
+   ========================================================================== */
+.oc-board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.oc-board {
+  position: relative;
+  background: var(--oc-card);
+  border: 1px solid var(--oc-line);
+  border-radius: 14px;
+  padding: 22px 20px 20px;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+  overflow: hidden;
+}
+
+.oc-board::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--oc-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.oc-board:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--oc-shadow-md);
+  border-color: var(--oc-line-strong);
+}
+
+.oc-board:hover::before {
+  transform: scaleX(1);
+}
+
+.oc-board-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--oc-primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  transition: background 0.28s ease, transform 0.28s ease;
+}
+
+.oc-board:hover .oc-board-icon {
+  background: var(--oc-accent-soft);
+  transform: rotate(-4deg) scale(1.05);
+}
+
+.oc-board-name {
+  font-family: var(--oc-font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--oc-ink);
+  margin: 0 0 6px;
+}
+
+.oc-board-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--oc-ink-soft);
+  margin: 0;
+}
+
+.oc-board-arrow {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  color: var(--oc-primary);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.oc-board:hover .oc-board-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   认证页 — 暖色分栏布局
+   ========================================================================== */
+.oc-auth {
+  min-height: calc(100vh - 130px);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 40px 20px 60px;
+}
+
+.oc-auth-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  max-width: 920px;
+  width: 100%;
+  background: var(--oc-card);
+  border: 1px solid var(--oc-line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--oc-shadow-md);
+}
+
+.oc-auth-aside {
+  position: relative;
+  background: linear-gradient(160deg, #c94f1e 0%, #e8622c 45%, #e9a13b 100%);
+  color: #fff;
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.oc-auth-aside::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.oc-auth-aside::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.oc-auth-aside-brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.oc-auth-aside-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--oc-font-display);
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.oc-auth-aside-name {
+  font-family: var(--oc-font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.oc-auth-aside-quote {
+  position: relative;
+  z-index: 1;
+}
+
+.oc-auth-aside-quote h2 {
+  font-family: var(--oc-font-display);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+
+.oc-auth-aside-quote p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.oc-auth-aside-foot {
+  position: relative;
+  z-index: 1;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.oc-auth-main {
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.oc-auth-main h3 {
+  font-family: var(--oc-font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--oc-ink);
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.oc-auth-main .oc-auth-sub {
+  color: var(--oc-ink-soft);
+  font-size: 14px;
+  margin: 0 0 28px;
+}
+
+.oc-auth-footer {
+  margin-top: 24px;
+  text-align: center;
+  color: var(--oc-ink-soft);
+  font-size: 14px;
+}
+
+.oc-auth-footer a {
+  color: var(--oc-primary-deep);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.oc-auth-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+  .oc-auth-wrap {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+  }
+  .oc-auth-aside {
+    padding: 32px 28px;
+  }
+  .oc-auth-aside-quote h2 {
+    font-size: 22px;
+  }
+  .oc-auth-main {
+    padding: 32px 28px;
+  }
+}
+
+/* ==========================================================================
+   通用页头卡片（个人中心等）
+   ========================================================================== */
+.oc-panel {
+  background: var(--oc-card);
+  border: 1px solid var(--oc-line);
+  border-radius: 14px;
+  box-shadow: var(--oc-shadow-sm);
+  overflow: hidden;
+}
+
+.oc-panel-head {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--oc-line);
+  background: linear-gradient(180deg, var(--oc-paper) 0%, var(--oc-card) 100%);
+}
+
+.oc-panel-head h2 {
+  font-family: var(--oc-font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--oc-ink);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.oc-panel-body {
+  padding: 24px;
+}
+
+/* ==========================================================================
+   底部
+   ========================================================================== */
+.oc-footer {
+  background: var(--oc-ink);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 28px 20px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.oc-footer strong {
+  color: var(--oc-gold);
+  font-weight: 600;
+}
+
+.oc-footer .oc-footer-rule {
+  width: 40px;
+  height: 2px;
+  background: var(--oc-primary);
+  margin: 0 auto 14px;
+  border-radius: 2px;
+}

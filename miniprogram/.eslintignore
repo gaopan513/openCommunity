@@ -1,0 +1,5 @@
+node_modules/
+dist/
+src.bak*/
+*.config.js
+project.config.json
