@@ -42,7 +42,7 @@ npm run check                         # 格式检查 + ESLint
 - 生产环境（`DJANGO_DEBUG=False`）强制要求 `DJANGO_SECRET_KEY` 环境变量，缺失拒绝启动；开发用占位密钥。配置样例见 `backend/.env.example`、`frontend/.env.example`。后端当前直接读取进程环境变量，**不会自动加载 `.env`**；仅复制文件不会生效，应通过终端或部署环境注入配置。
 - 根目录 `.gitignore` 排除 `backend/db.sqlite3` 及其辅助文件、`backend/media/`、虚拟环境、`__pycache__/`、`*.py[cod]`、依赖、构建产物、日志、`.workbuddy/`、`.codegraph/` 和 `project.private.config.json`。这些本地资料禁止提交，也不要把其中的账号、令牌、个人路径或操作记录复制到源码和文档。
 - `.env` 与 `.env.*` 默认忽略；允许提交 `.env.example`、`.env.*.example`，以及仅含公开 API 地址的 `miniprogram/.env.development`、`miniprogram/.env.production`。示例和小程序环境配置不得含真实凭证；`VITE_*` 会进入客户端产物，不能放 AppSecret。
-- 微信 AppID 位于 `miniprogram/src/manifest.json` 的 `mp-weixin.appid` 和 `miniprogram/project.config.json`，当前已有具体配置，修改时保持一致，不要把 uni-app 顶层 `appid` 与微信 AppID 混淆。AppID 是应用标识，可以公开；文档使用占位符，不复制实际值。`WECHAT_MINIAPP_SECRET` 只由后端进程环境注入，小程序配置中禁止出现 AppSecret。
+- 微信 AppID 位于 `miniprogram/src/manifest.json` 的 `mp-weixin.appid` 和 `miniprogram/project.config.json`，仓库统一使用 `touristappid` 占位。真实微信登录或发布时，在本地使用自己的 AppID 并保持两处一致，同时核对后端的 `WECHAT_MINIAPP_APPID`；提交前恢复占位值，不要把 uni-app 顶层 `appid` 与微信 AppID 混淆。AppID 虽不是密钥，本项目为避免应用关联不提交具体值。`WECHAT_MINIAPP_SECRET` 只由后端进程环境注入，小程序配置中禁止出现 AppSecret。
 - 初始化 Git 仓库后，用 `git check-ignore -v` 核验敏感路径，再用 `git status --short` 和 `git diff --cached --name-only` 检查实际提交清单。`.gitignore` 不会移除已被跟踪的文件，也不控制手动上传或压缩打包；微信 `packOptions.ignore` 仅影响小程序打包。
 - 用户头像、商家图片等上传走 `common/utils.py` 的 `generate_upload_path`，按 `media/{folder}/{YYYYMM}/{uuid}.ext` 落盘；图片字段统一挂 `common/validators.py` 的 `validate_image`（≤5MB、jpg/jpeg/png/webp）。
 - PII（手机号、地址）仅限本人或管理员访问：本人资料用 `UserProfileSerializer`，公开场景嵌套一律用 `UserSimpleSerializer`（仅 id/用户名/头像/角色）；权限控制在 `common/permissions.py`。

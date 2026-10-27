@@ -153,7 +153,7 @@ npm run dev:mp-weixin
 然后用微信开发者工具「导入项目」，目录选择 `miniprogram/dist/dev/mp-weixin`（生产构建则为 `npm run build:mp-weixin` 生成 `dist/build/mp-weixin`）。开发联调注意：
 
 - 在开发者工具「详情 → 本地设置」勾选**不校验合法域名**，即可直连本地后端 `http://127.0.0.1:8000/api/v1`（见 `.env.development`）。
-- 工程当前已有微信 AppID 配置。克隆后请核对 `miniprogram/src/manifest.json` 的 `mp-weixin.appid` 与 `miniprogram/project.config.json`，使用自己的应用标识时保持两处一致；后端微信登录配置也须对应同一应用。AppID 不是 AppSecret。
+- 仓库使用 `touristappid` 占位，便于导入预览。真实微信登录和发布需要自己的 AppID：在本地修改 `miniprogram/src/manifest.json` 的 `mp-weixin.appid` 与 `miniprogram/project.config.json`，并核对后端 `WECHAT_MINIAPP_APPID`，三者须对应同一应用。提交代码前恢复占位值，避免暴露应用关联；AppID 不是 AppSecret。
 - 登录由小程序调用 `wx.login` 获取 code，再交由后端换取 openid。具体联调项见 [docs/delivery/miniprogram-checklist.md](docs/delivery/miniprogram-checklist.md)。
 - 上线前将 `miniprogram/.env.production` 的示例 API 域名替换为实际 HTTPS 服务地址，并在微信后台配置对应的请求和上传域名。
 
@@ -161,7 +161,7 @@ npm run dev:mp-weixin
 
 根目录 [.gitignore](.gitignore) 已排除本地数据库及其辅助文件、`backend/media/` 上传资料、虚拟环境、Python 字节码缓存、依赖、构建产物、日志、AI 工具记忆和代码索引，以及微信开发者工具的 `project.private.config.json`。
 
-`.env` 和 `.env.*` 默认不提交；公开示例文件及小程序的 `.env.development`、`.env.production` 允许提交，后两者只应包含公开 API 地址。源码中的 AppID 仍会提交；若不希望公开应用关联，发布前自行使用占位配置。不要把数据库中的账号、密码哈希、令牌、联系方式或本机路径复制到源码、截图和文档中。
+`.env` 和 `.env.*` 默认不提交；公开示例文件及小程序的 `.env.development`、`.env.production` 允许提交，后两者只应包含公开 API 地址。小程序工程配置仍会提交，AppID 统一保留为 `touristappid` 占位。不要把数据库中的账号、密码哈希、令牌、联系方式或本机路径复制到源码、截图和文档中。
 
 初始化 Git 仓库后，可在项目根目录核验：
 
